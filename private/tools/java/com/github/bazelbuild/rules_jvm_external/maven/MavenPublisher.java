@@ -104,13 +104,14 @@ public class MavenPublisher {
 
     try {
       List<CompletableFuture<Void>> futures = new ArrayList<>();
-      futures.add(upload(repo, credentials, coords, ".pom", pom, signingMetadata));
 
       if (mainArtifact != null) {
         String ext =
             com.google.common.io.Files.getFileExtension(mainArtifact.getFileName().toString());
         futures.add(upload(repo, credentials, coords, "." + ext, mainArtifact, signingMetadata));
       }
+
+      futures.add(upload(repo, credentials, coords, ".pom", pom, signingMetadata));
 
       // Update maven-metadata for local maven repositories.
       // This makes it so the target maven repository can be directly used without further steps.
