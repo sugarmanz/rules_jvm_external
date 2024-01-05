@@ -174,7 +174,6 @@ public class MavenPublisher {
     Path pom = Paths.get(pomPath);
 
     List<CompletableFuture<Void>> futures = new ArrayList<>();
-    futures.add(upload(repo, credentials, coords, ".pom", pom, signingMetadata, executor));
 
     futures.add(
         upload(
@@ -185,6 +184,8 @@ public class MavenPublisher {
             Paths.get(mainArtifactPath),
             signingMetadata,
             executor));
+
+    futures.add(upload(repo, credentials, coords, ".pom", pom, signingMetadata, executor));
 
     if (!Strings.isNullOrEmpty(extraArtifacts)) {
       List<String> extraArtifactTuples = Splitter.onPattern(",").splitToList(extraArtifacts);
