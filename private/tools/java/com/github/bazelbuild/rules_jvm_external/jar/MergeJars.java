@@ -181,6 +181,12 @@ public class MergeJars {
             continue;
           }
 
+          // TODO: Why do we need to do this?? Is there a better way?
+          Pattern rClassMatcher = Pattern.compile("^.*\\/R(\\$.*)?\\.(class|java)");
+          if (rClassMatcher.asMatchPredicate().test(entry.getName())) {
+            continue;
+          }
+
           if (!entry.isDirectory()) {
             // Duplicate files, however may not be. We need the hash to determine
             // whether we should do anything.
