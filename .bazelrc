@@ -1,5 +1,7 @@
 common --experimental_google_legacy_api
 
+build --experimental_google_legacy_api
+
 build --java_language_version=11
 build --java_runtime_version=remotejdk_11
 
