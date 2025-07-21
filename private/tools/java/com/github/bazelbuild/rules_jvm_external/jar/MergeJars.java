@@ -269,7 +269,7 @@ public class MergeJars {
 
   private static void writeClassesJar(Path out,
                                       Manifest manifest,
-                                      Map<String, Set<String>> allServices,
+                                      Map<String, List<String>> allServices,
                                       Set<Path> sources,
                                       Map<String, Path> fileToSourceJar) throws IOException {
     // Now create the output jar

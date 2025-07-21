@@ -1,10 +1,11 @@
 load("@bazel_skylib//lib:new_sets.bzl", "sets")
 load("@compatibility_proxy//:proxy.bzl", "JavaInfo", "java_common")
+load("@rules_android//providers:providers.bzl", "AndroidLibraryAarInfo")
 load("@rules_license//rules:providers.bzl", "PackageInfo")
 load("//private/lib:bzlmod.bzl", "get_module_name_of_owner_of_repo")
 load("//private/lib:coordinates.bzl", "to_external_form", "to_purl", "unpack_coordinates")
 load(":has_maven_deps.bzl", "MavenInfo", "calculate_artifact_jars", "calculate_artifact_source_jars", "has_maven_deps")
-load(":maven_utils.bzl", "determine_additional_dependencies", "unpack_coordinates")
+load(":maven_utils.bzl", "determine_additional_dependencies")
 
 DEFAULT_EXCLUDED_WORKSPACES = [
     # Note: we choose to drop the dependency entirely because
@@ -85,7 +86,8 @@ def _maven_project_jar_impl(ctx):
     )
 
     # Merge together all the binary jars
-    packaging = unpack_coordinates(info.coordinates).type or "jar"
+    unpacked = unpack_coordinates(info.coordinates)
+    packaging = unpacked.packaging if hasattr(unpacked, "packaging") else "jar"
     intermediate_jar = ctx.actions.declare_file("%s.%s" % (ctx.label.name, packaging))
 
     if packaging == "aar" and AndroidLibraryAarInfo in target and target[AndroidLibraryAarInfo].aar:
