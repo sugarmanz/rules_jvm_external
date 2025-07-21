@@ -114,7 +114,6 @@ _gathered = provider(
         "artifact_infos",
         "transitive_exports",
         "dep_infos",
-        "artifact_coordinates",
     ],
 )
 
@@ -170,7 +169,6 @@ def _has_maven_deps_impl(target, ctx):
         transitive_exports = [],
         dep_infos = [],
         label_to_javainfo = {target.label: target[JavaInfo]},
-        artifact_coordinates = coordinates,
     )
 
     for attr in _ASPECT_ATTRS:
