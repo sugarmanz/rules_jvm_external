@@ -88,7 +88,7 @@ def _maven_project_jar_impl(ctx):
 
     # Merge together all the binary jars
     unpacked = unpack_coordinates(info.coordinates)
-    packaging = unpacked.packaging if unpacked.packaging else "jar"
+    packaging = unpacked.packaging if unpacked and unpacked.packaging else "jar"
     intermediate_jar = ctx.actions.declare_file("%s.%s" % (ctx.label.name, packaging))
 
     if packaging == "aar" and AndroidLibraryAarInfo in target and target[AndroidLibraryAarInfo].aar:
